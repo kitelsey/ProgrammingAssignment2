@@ -4,18 +4,18 @@
 ## Write a short comment describing this function
 
 makeCacheMatrix <- function(x = matrix()) {
-  inverted.matrx<-NULL
+  invrt<-NULL
   set<-function(y){
    x<<-y
-   inverted.matrx<<-NULL
+   invrt<<-NULL
  }
  get<-function() x
- set.inverted.mtrx<-function(mat) inverted.matrx<<-mat
- get.inverted.mtrx<-function() inverted.matrx
+ setinvrt<-function(mat) invrt<<-mat
+ getinvrt<-function() invrt
    
  list(set=set,get=get,
-      get.inverted.mtrx=get.inverted.mtrx,
-      set.inverted.mtrx=set.inverted.mtrx)
+      getinvrt=getinvrt,
+      setinvrt=setinvrt)
  }
 
 ## Write a short comment describing this function
@@ -23,20 +23,17 @@ makeCacheMatrix <- function(x = matrix()) {
 cacheSolve <- function(x, ...) {
         ## Return a matrix that is the inverse of 'x'
  
-    invrt<-x$get.inverted.mtrx()
-    mtrx.now<-x$get()
-
-    if (is.null(invrt) || !identical(invrt, mtrx.now)){
-      a<-mtrx.now[1]
-      b<--mtrx.now[3]
-      c<--mtrx.now[2]
-      d<-mtrx.now[4]
-      invrt<-x$set.inverted.mtrx(matrix(1/(a*d-b*c)*c(d,c,b,a),nrow=2,ncol=2))
+    invrt<-x$getinvrt()
+    mtrx<-x$get()
+    
+    if (is.null(invrt)){
+      
+      invrt<-x$setinvrt(solve(mtrx))
       return (invrt)
       }
-      else {
-        print("existed")
-        return (x$get.inverted.mtrx())
+    else {
+      print("existed")
+      return (x$getinvrt())
 
-      }
+    }
 }
